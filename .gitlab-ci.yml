@@ -1,0 +1,17 @@
+stages:
+  - 1.0.1
+
+docker-tag-1.0.1:
+  stage: 1.0.1
+  only:
+    refs:
+      - master
+  image:
+    name: gcr.io/devops-workshop-2023/terraform-runner:1.0.1
+    entrypoint: [""]
+  script:
+    - cd image_dir
+    - IMAGE_TAG="$(cat version.txt)"
+    - crane version
+    - crane auth login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - crane tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA 1.0.1
