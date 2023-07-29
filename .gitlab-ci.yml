@@ -7,7 +7,7 @@ docker-tag-1.0.1:
     refs:
       - master
   image:
-    name: gcr.io/devops-workshop-2023/terraform-runner@sha256:02e3336558cad226f9aef0a0674dedeec0d65ced26cdf2c97703fb1959617429
+    name: gcr.io/devops-workshop-2023/terraform-runner:1.0.1
     entrypoint: [""]
   script:
     - cd image_dir
