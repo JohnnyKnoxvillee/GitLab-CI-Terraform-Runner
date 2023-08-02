@@ -1,7 +1,6 @@
 include:
   - local: 'terraform-runner/.gitlab-ci.yml'
 
-
 before_script:
   - echo $SERVICE_ACCOUNT_JSON | base64 -d > $CI_PROJECT_DIR/service-account.json
   - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=$CI_PROJECT_DIR/service-account.json --project=devops-workshop-2023
@@ -23,5 +22,4 @@ build-job:
     - IMAGE_TAG="$(cat version.txt)"
     - crane manifest exists gcr.io/devops-workshops-2023/${CI_COMMIT_SHA}:${image_tag}
     - gcloud builds submit --project=$GCLOUD_PROJECT_ID --tag gcr.io/devops-workshops-2023/terraform-runner:${CI_COMMIT_SHA}
-    - cd terraform-runner
     - gcloud containers images add-tag gcr.io/devops-workshops-2023/terraform-runner:${CI_COMMIT_SHA} gcr.io/devops-workshops-2023/terraform-runner:${image_tag}
