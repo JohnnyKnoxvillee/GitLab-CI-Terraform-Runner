@@ -6,3 +6,4 @@ stages:
 build_and_test:
   stage: build
   script:
+    crane version
