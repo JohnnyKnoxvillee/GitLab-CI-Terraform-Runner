@@ -7,7 +7,7 @@ before_script:
   - echo $SERVICE_ACCOUNT_JSON | base64 -d > $CI_PROJECT_DIR/service-account.json
   - cd $CI_PROJECT_DIR
   - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=service-account.json --project=devops-workshop-2023
-  - cat service-account.json | docker login -u $DOCKER_NAME --password-stdin $CI_REGISTRY
+  - echo service-account.json | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
   - gcloud auth list
 
 build-job:
@@ -22,5 +22,5 @@ build-job:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
     - crane version
-    - cat service-account.json | docker login -u $DOCKER_NAME --password-stdin $CI_REGISTRY
+    - echo service-account.json | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
 
