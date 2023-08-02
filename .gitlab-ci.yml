@@ -5,9 +5,10 @@ stages:
 
 before_script:
   - echo $SERVICE_ACCOUNT_JSON | base64 -d > $CI_PROJECT_DIR/service-account.json
-  - cd $CI_PROJECT_DIR
-  - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=service-account.json --project=devops-workshop-2023
-  - echo service-account.json | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
+  - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=$CI_PROJECT_DIR/service-account.json --project=devops-workshop-2023
+  - rm -r $CI_PROJECT_DIR/service-account.json
+  - SERVICE_ACCOUNT_DECODED=$(echo "$SERVICE_ACCOUNT_JSON" | base64 -d)
+  - echo $SERVICE_ACCOUNT_DECODED | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
   - gcloud auth list
 
 build-job:
@@ -17,10 +18,10 @@ build-job:
       - develop
   image:
     name: gcr.io/devops-workshop-2023/terraform-runner:1.0.1
-    entrypoint: [""]
   script:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
     - crane version
-    - echo service-account.json | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
+    - SERVICE_ACCOUNT_DECODED=$(echo "$SERVICE_ACCOUNT_JSON" | base64 -d)
+    - echo $SERVICE_ACCOUNT_DECODED | crane auth login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
 
