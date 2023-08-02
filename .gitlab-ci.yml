@@ -2,7 +2,7 @@ include:
   - local: 'terraform-runner/.gitlab-ci.yml'
 
 before_script:
-  - echo $SERVICE_ACCOUNT_JSON | base64 -d > $CI_PROJECT_DIR/service-account.json
+  - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > $CI_PROJECT_DIR/service-account.json
   - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=$CI_PROJECT_DIR/service-account.json --project=devops-workshop-2023
   - rm -r $CI_PROJECT_DIR/service-account.json
   - crane auth login
