@@ -8,6 +8,7 @@ before_script:
   - gcloud auth activate-service-account $SERVICE_ACCOUNT_NAME --key-file=$CI_PROJECT_DIR/service-account.json --project=devops-workshop-2023
   - rm -r $CI_PROJECT_DIR/service-account.json
   - SERVICE_ACCOUNT_DECODED=$(echo "$SERVICE_ACCOUNT_JSON" | base64 -d)
+  - export SERVICE_ACCOUNT_DECODED
   - echo $SERVICE_ACCOUNT_DECODED | docker login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
   - gcloud auth list
 
