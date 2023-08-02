@@ -6,7 +6,5 @@ stages:
 build_and_test:
   stage: build
   script:
-<<<<<<< HEAD
-=======
-    crane version
->>>>>>> feature/14-create-gitlab-ciyaml-for-docker-repository
+    - crane version
+
