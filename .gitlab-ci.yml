@@ -23,5 +23,6 @@ build-job:
     - IMAGE_TAG="$(cat version.txt)"
     - crane version
     - SERVICE_ACCOUNT_DECODED=$(echo "$SERVICE_ACCOUNT_JSON" | base64 -d)
+    - export SEVICE_ACCOUNT_DECODED
     - echo $SERVICE_ACCOUNT_DECODED | crane auth login -u "$DOCKER_NAME" --password-stdin $CI_REGISTRY
 
