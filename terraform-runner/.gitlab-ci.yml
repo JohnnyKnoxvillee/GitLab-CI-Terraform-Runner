@@ -1,3 +1,5 @@
+extends: ../.build_branch_template.yml
+
 stages:
   - build
 
