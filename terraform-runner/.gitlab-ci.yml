@@ -7,9 +7,8 @@ stages:
 
 build:
   stage: build
-  images:
-    - name: gcr.io/devops-workshops-2023/terraform-runner
   script:
+    - docker build -t my_image:1.0.1
     - crane manifest exists gcr.io/devops-workshops-2023:${IMAGE_TAG}
     - docker push gcr.io/devops-workshops-2023/terraform-runner:${IMAGE_TAG}
 
