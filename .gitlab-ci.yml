@@ -13,7 +13,6 @@ stages:
   - deploy
 
 build-job:
-  extends: terraform-runner/.gitlab-ci.yml
   stage: build
   only:
     - develop

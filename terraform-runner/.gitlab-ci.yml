@@ -1,4 +1,4 @@
-extends: ../.build_branch_template.yml
+extends: ../.gitlab-ci.yml
 
 stages:
   - build
