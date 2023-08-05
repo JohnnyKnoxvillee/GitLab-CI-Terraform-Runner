@@ -3,7 +3,8 @@ stages:
 
 build:
   stage: build
-  image: my_custom_image:latest 
+  image: my_custom_image:1.0.1
+ 
   script:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
