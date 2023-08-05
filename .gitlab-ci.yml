@@ -14,13 +14,5 @@ stages:
 
 build-job:
   stage: build
-  image: gcr.io/devops-workshop-2023/terraform-runner:1.0.1
   only:
     - develop
-  script:
-    - cd terraform-runner
-    - IMAGE_TAG="$(cat version.txt)"
-    - crane manifest exists gcr.io/devops-workshops-2023/${CI_COMMIT_SHA}:${image_tag}
-    - gcloud builds submit --project=$GCLOUD_PROJECT_ID --tag gcr.io/devops-workshops-2023/terraform-runner:${CI_COMMIT_SHA}
-    - gcloud containers images add-tag gcr.io/devops-workshops-2023/terraform-runner:${CI_COMMIT_SHA} gcr.io/devops-workshops-2023/terraform-runner:${image_tag}
-
