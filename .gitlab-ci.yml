@@ -14,7 +14,7 @@ stages:
 
 .build_branch_templates:
   stage: build
-  image: gcr.io/devops-workshop-2023/terraform-runner:1.0.1
+  image: gcr.io/devops-workshop-2023/terraform-runner:v1.0.1
   only:
     - develop
   script:
