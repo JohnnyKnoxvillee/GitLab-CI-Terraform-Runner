@@ -16,3 +16,6 @@ build-job:
   stage: build
   only:
     - develop
+  script:
+    - crane version
+    - gcloud auth list
