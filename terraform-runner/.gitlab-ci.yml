@@ -1,5 +1,3 @@
-extends: ../.gitlab-ci.yml
-
 stages:
   - build
 
