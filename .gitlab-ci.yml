@@ -23,5 +23,5 @@ stages:
   script:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
-    - echo "Checking if image with tag $VERSION_TAG already exists in $GCR_REGISTRY/$IMAGE_NAME:$VERSION_TAG"
-    - crane manifest $GCR_REGISTRY/$IMAGE_NAME:$VERSION_TAG
+    - echo "Checking if image with tag $VERSION_TAG already exists in $GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
+    - crane manifest $GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
