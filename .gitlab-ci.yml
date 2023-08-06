@@ -1,16 +1,20 @@
 include:
   - local: 'terraform-runner/.gitlab-ci.yml'
 
+variables:
+  IMAGE_NAME: terraform-runner
+  VERSION_TAG: $(cat docker/terraform-runner/version.txt)
+  GCR_REGISTRY: gcr.io/devops-workshops-2023
+
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io 
   - rm -r $CI_PROJECT_DIR/service-account.json
+  - gcloud auth configure-docker -y
 
 stages:
   - build
-  - test
-  - deploy
 
 .build_branch_templates:
   stage: build
@@ -18,8 +22,5 @@ stages:
   only:
     - develop
   script:
-    - cd terraform-runner
-    - IMAGE_TAG="$(cat version.txt)"
-    - crane manifest gcr.io/devops-workshops-2023/terraform-runner:${IMAGE_TAG}
-    - docker push gcr.io/devops-workshops-2023/terraform-runner:${IMAGE_TAG}
-
+    - echo "Checking if image with tag $VERSION_TAG already exists in $GCR_REGISTRY/$IMAGE_NAME:$VERSION_TAG"
+    - crane manifest $GCR_REGISTRY/$IMAGE_NAME:$VERSION_TAG
