@@ -11,7 +11,7 @@ before_script:
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io 
   - rm -r $CI_PROJECT_DIR/service-account.json
-  - gcloud auth configure-docker -y
+  - gcloud auth configure-docker
 
 stages:
   - build
