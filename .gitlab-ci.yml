@@ -14,7 +14,7 @@ stages:
 
 .build_branch_templates:
   stage: check_version
-  image: gcr.io/devops-workshop-2023/terraform-runner:v1.0.1
+  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - cat all_versions.txt | grep "$(cat version.txt)" > version_image.txt
@@ -32,6 +32,7 @@ job1:
 
 job2:
   extends: .build_branch_templates
+  when: on_failure
   rules:
     - if: $VERSION_IMAGE !~ $IMAGE_TAG
   script:
