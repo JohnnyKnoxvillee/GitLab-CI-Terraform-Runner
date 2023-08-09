@@ -1,6 +1,6 @@
 variables:
   IMAGE_NAME: terraform-runner
-  GCR_REGISTRY: gcr.io/devops-workshops-2023
+  GCR_REGISTRY: gcr.io/devops-workshop-2023
 
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
