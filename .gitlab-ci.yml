@@ -20,10 +20,10 @@ build_branch_templates:
     - IMAGE_TAG="$(cat version.txt)"
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
 
-job:
+job1:
+  stage: build
   rules:
     - if: cat all_versions.txt | grep 1.0.0
   script: echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"
-  allow_failure: false
 
 
