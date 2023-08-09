@@ -1,6 +1,3 @@
-include:
-  - local: 'terraform-runner/.gitlab-ci.yml'
-
 variables:
   IMAGE_NAME: terraform-runner
   GCR_REGISTRY: gcr.io/devops-workshops-2023
