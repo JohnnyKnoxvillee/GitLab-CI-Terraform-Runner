@@ -18,12 +18,13 @@ build_branch_templates:
   image: gcr.io/devops-workshop-2023/terraform-runner:v1.0.1
   script:
     - IMAGE_TAG="$(cat version.txt)"
+    - ALL_VERSIONS="$(cat all_versions.txt)"
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
 
 job1:
   stage: build
-  rule:
-    - if: cat all_versions.txt | grep 1.0.0
+  rules:
+    - if: $ALL_VERSIONS | grep 1.0.0
   script: echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"
 
 
