@@ -6,7 +6,6 @@ before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io 
-  - IMAGE_TAG="$(cat version.txt)"
  
 stages:
   - check_version
@@ -18,10 +17,10 @@ build_branch_templates:
   image: gcr.io/devops-workshop-2023/terraform-runner:v1.0.1
   script:
     - IMAGE_TAG="$(cat version.txt)"
-    - ALL_VERSIONS="$(cat all_versions.txt)"
     - VERSION_IMAGE="$(cat version_image.txt)"
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - cat all_versions.txt | grep "$(cat version.txt)" > version_image.txt
+    - ALL_VERSIONS="$(cat all_versions.txt)"
 
 job1:
   stage: build
