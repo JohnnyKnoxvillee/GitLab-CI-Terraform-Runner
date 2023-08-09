@@ -10,7 +10,6 @@ before_script:
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io 
   - rm -r $CI_PROJECT_DIR/service-account.json
-  - echo "Y" | gcloud auth configure-docker
 
 stages:
   - build
@@ -24,4 +23,4 @@ stages:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
     - echo "Checking if image with tag $IMAGE_TAG already exists in $GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
-    - crane manifest https://$GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+    - crane ls $GCR_REGISTRY/$IMAGE_NAME
