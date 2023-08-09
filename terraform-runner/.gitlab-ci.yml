@@ -1,0 +1,6 @@
+variables:
+  IMAGE_NAME: terraform-runner
+  GCR_REGISTRY: gcr.io/devops-workshops-2023
+
+my_image:
+  extends: .build_branch_templates
