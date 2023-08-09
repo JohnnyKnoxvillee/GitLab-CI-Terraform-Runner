@@ -21,6 +21,7 @@ stages:
     - IMAGE_TAG="$(cat version.txt)"
     - VERSION_IMAGE="$(cat version_image.txt)"
     - ALL_VERSIONS="$(cat all_versions.txt)"
+    - echo $COMMIT_SHA
 
 job1:
   extends: .build_branch_templates 
