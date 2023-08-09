@@ -22,4 +22,4 @@ stages:
     - cd terraform-runner
     - IMAGE_TAG="$(cat version.txt)"
     - echo "Checking if image with tag $IMAGE_TAG already exists in $GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
-    - crane ls $GCR_REGISTRY/$IMAGE_NAME
+    - crane ls gcr.io/devops-workshops-2023/terraform-runner
