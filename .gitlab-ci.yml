@@ -17,4 +17,4 @@ build_branch_templates:
   only:
     - develop
   script:
-    - crane ls gcr.io/devops-workshops-2023/terraform-runner
+    - crane ls gcr.io/devops-workshop-2023/terraform-runner
