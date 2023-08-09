@@ -1,5 +1,0 @@
-stages:
-  - build
-
-build:
-  extends: .build_branch_templates
