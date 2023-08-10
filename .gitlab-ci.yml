@@ -1,6 +1,5 @@
 variables:
-  IMAGE_NAME: terraform-runner
-  GCR_REGISTRY: gcr.io/devops-workshop-2023
+  GCR_REGISTRY: gcr.io/devops-workshop-2023/terraform-runner
 
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
@@ -24,7 +23,7 @@ job1:
   script:
     - >
       if [ -n "$VERSION_IMAGE" ]; then
-        echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
+        echo "Please update version.txt, image with this tag already exists in gcr.io"; 
       else
-        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME
+        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY:$IMAGE_TAG 
       fi;
