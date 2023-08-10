@@ -25,10 +25,10 @@ stages:
 job1:
   extends: .build_branch_templates 
   rules:
-    - if: $VERSION_IMAGE == $IMAGE_TAG
+    - if: $VERSION_IMAGE !~ $IMAGE_TAG
   script:
     - echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"
-  allow_failure: false
+  allow_failure: true
 
 job2:
   extends: .build_branch_templates
@@ -36,6 +36,5 @@ job2:
   rules:
     - if: $VERSION_IMAGE !~ $IMAGE_TAG
   script:
-    - gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}-${CI_COMMIT_SHA}
-    - gcloud container images add-tag ${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}-${CI_COMMIT_SHA} ${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} 
+    - gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} 
   allow_failure: false
