@@ -19,6 +19,7 @@ build_branch_templates:
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - ALL_VERSIONS="$(cat all_versions.txt)"
     - echo "$ALL_VERSIONS"
+    - echo "$(cat version.txt)"
     - (grep -Fxq "$(cat version.txt)" all_versions.txt && echo "$(cat version.txt)") > version_image.txt
     - IMAGE_TAG="$(cat version.txt)"
     - VERSION_IMAGE="$(cat version_image.txt)"
