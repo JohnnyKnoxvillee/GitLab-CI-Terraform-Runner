@@ -16,8 +16,6 @@ build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
-    - echo "hello" > my_file.txt
-    - grep "hello" myname.txt
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - ALL_VERSIONS="$(cat all_versions.txt)"
     - echo "$ALL_VERSIONS"
