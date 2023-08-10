@@ -24,8 +24,6 @@ stages:
 
 job1:
   extends: .build_branch_templates
-  rules:
-    - if: $VERSION_IMAGE == $IMAGE_TAG
   script:
     - >
       if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then
