@@ -27,7 +27,7 @@ job1:
     - if: $VERSION_IMAGE == $IMAGE_TAG
   script:
     - >
-      if [ -n "$VERSION_IMAGE" ] && [ "$VERSION_IMAGE" -ne "$IMAGE_TAG" ]; then 
+      if [ -n "$VERSION_IMAGE" ]; then 
         gcloud builds submit --project devops-workshop-2023 --tag ${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
       else
         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY";
