@@ -30,7 +30,7 @@ job1:
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAGG
       fi;
   variables:
-    IMAGE_TAGG: $IMAGE_TAG
+    IMAGE_TAGG: "$IMAGE_TAG"
 
 tag_image:
   stage: tag_image
