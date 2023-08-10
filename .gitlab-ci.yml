@@ -27,8 +27,10 @@ job1:
       if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io"; 
       else
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$CI_COMMIT_SHA
+        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAGG
       fi;
+  variables:
+    IMAGE_TAGG: IMAGE_TAG
 
 tag_image:
   stage: tag_image
