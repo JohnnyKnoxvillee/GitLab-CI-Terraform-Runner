@@ -1,4 +1,4 @@
-\variables:
+variables:
   IMAGE_NAME: terraform-runner
   GCR_REGISTRY: gcr.io/devops-workshop-2023
 
