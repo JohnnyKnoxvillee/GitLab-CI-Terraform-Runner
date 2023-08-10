@@ -1,9 +1,6 @@
 variables:
   IMAGE_NAME: terraform-runner
   GCR_REGISTRY: gcr.io/devops-workshop-2023
-  IMAGE_TAG: "$(cat version.txt)"
-  VERSION_IMAGE: "$(cat version_image.txt)"
-  ALL_VERSIONS: "$(cat all_versions.txt)"
 
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
