@@ -10,8 +10,21 @@ before_script:
 stages:
   - check_version
 
-build_branch_templates:
+.build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
-    - gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/terraform-runner:1.0.1
+    - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
+    - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
+    - VERSION_IMAGE="$(cat version_image.txt)"
+    - IMAGE_TAG="$(cat version.txt)"
+
+job1:
+  extends: .build_branch_templates
+  script:
+    - >
+      if [ -n "$VERSION_IMAGE" ]; then
+        echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
+      else
+        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/terraform-runner:$IMAGE_TAG
+      fi;
