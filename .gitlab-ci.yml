@@ -9,8 +9,6 @@ before_script:
 
 stages:
   - check_version
-  - build
-  - tag_image
 
 build_branch_templates:
   stage: check_version
