@@ -16,7 +16,7 @@ build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
-    - sudo apt install grep
+    - sudo apt-get install grep
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - ALL_VERSIONS="$(cat all_versions.txt)"
     - echo "$ALL_VERSIONS"
