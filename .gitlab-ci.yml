@@ -12,7 +12,7 @@ stages:
   - build
   - tag_image
 
-build_branch_templates:
+.build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
@@ -23,8 +23,7 @@ build_branch_templates:
     - ALL_VERSIONS="$(cat all_versions.txt)"
 
 job1:
-  stage: build
-  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  extends: .build_branch_templates
   rules:
     - if: $VERSION_IMAGE == $IMAGE_TAG
   script:
