@@ -20,6 +20,7 @@ stages:
     - IMAGE_TAG="$(cat version.txt)"
   variables:
     IMAGE_TAGG: $IMAGE_TAG
+      expand: false
 
 job1:
   extends: .build_branch_templates
