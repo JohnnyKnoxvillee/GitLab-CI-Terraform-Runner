@@ -1,7 +1,5 @@
 variables:
   GCR_REGISTRY: gcr.io/devops-workshop-2023/terraform-runner
-  IMAGE_TAGG: $IMAGE_TAG
-
 
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
@@ -12,19 +10,19 @@ stages:
   - check_version
   - tag_image
 
-build_branch_templates:
+.build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
-    - echo "$IMAGE_TAGG"
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
     - VERSION_IMAGE="$(cat version_image.txt)"
     - IMAGE_TAG="$(cat version.txt)"
+  variables:
+    IMAGE_TAGG: $IMAGE_TAG
 
 job1:
-  stage: check_version
-  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  extends: .build_branch_templates
   script:
     - >
       if [ -n "$VERSION_IMAGE" ]; then
