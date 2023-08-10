@@ -30,7 +30,7 @@ job1:
   script:
     - >
       if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then
-         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
+        echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
       else
         echo "Pushing image to $GCR_REGISTRY";
         gcloud builds submit . --config=Dockerfile
