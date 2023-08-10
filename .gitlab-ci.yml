@@ -23,17 +23,16 @@ stages:
     - ALL_VERSIONS="$(cat all_versions.txt)"
 
 job1:
-  extends: .build_branch_templates 
-  rules:
-    - if: $VERSION_IMAGE !~ $IMAGE_TAG
-  script:
-    - echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"
-  allow_failure: true
-
-job2:
   extends: .build_branch_templates
   rules:
-    - if: $VERSION_IMAGE !~ $IMAGE_TAG
+    - if: $VERSION_IMAGE == $IMAGE_TAG
+  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
-    - gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} 
+    - >
+      if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then
+         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
+      else
+        gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG};
+      fi
   allow_failure: false
+
