@@ -6,6 +6,7 @@ before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
+  - sudo apt install grep
 
 stages:
   - check_version
@@ -20,7 +21,7 @@ build_branch_templates:
     - ALL_VERSIONS="$(cat all_versions.txt)"
     - echo "$ALL_VERSIONS"
     - echo "$(cat version.txt)"
-    - (grep -Fxq "$(cat version.txt)" all_versions.txt && echo "$(cat version.txt)") > version_image.txt
+    - grep -Fxq "$(cat version.txt)" all_versions.txt && echo "$(cat version.txt)") > version_image.txt
     - IMAGE_TAG="$(cat version.txt)"
     - VERSION_IMAGE="$(cat version_image.txt)"
     - ALL_VERSIONS="$(cat all_versions.txt)"
