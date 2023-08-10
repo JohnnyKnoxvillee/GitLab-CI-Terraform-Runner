@@ -26,5 +26,5 @@ job1:
       if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
       else
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/terraform-runner
+        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME
       fi;
