@@ -10,7 +10,7 @@ before_script:
 stages:
   - check_version
 
-.build_branch_templates:
+build_branch_templates:
   stage: check_version
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
