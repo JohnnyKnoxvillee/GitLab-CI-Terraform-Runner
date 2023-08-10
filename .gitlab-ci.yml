@@ -18,6 +18,7 @@ build_branch_templates:
   rules:
     - if: $VERSION_IMAGE == $IMAGE_TAG
   script:
+    - >
       crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
       cat all_versions.txt | grep "$(cat version.txt)" > version_image.txt
       IMAGE_TAG="$(cat version.txt)"
