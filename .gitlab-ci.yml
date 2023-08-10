@@ -32,7 +32,6 @@ job1:
 
 job2:
   extends: .build_branch_templates
-  when: on_failure
   rules:
     - if: $VERSION_IMAGE !~ $IMAGE_TAG
   script:
