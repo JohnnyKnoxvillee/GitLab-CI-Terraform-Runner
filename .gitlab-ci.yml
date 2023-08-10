@@ -30,6 +30,6 @@ job1:
       if [ "$VERSION_IMAGE" -eq "$IMAGE_TAG" ]; then 
         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY";
       else
-        gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG};
+        gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}${IMAGE_NAME}:${IMAGE_TAG};
       fi;
  
