@@ -23,7 +23,7 @@ build_branch_templates:
       IMAGE_TAG="$(cat version.txt)"
       VERSION_IMAGE="$(cat version_image.txt)"
       ALL_VERSIONS="$(cat all_versions.txt)"
-      if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then
+      if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then;
         echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
       else
         echo "Pushing image to $GCR_REGISTRY";
