@@ -33,7 +33,7 @@ job1:
          echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY"; 
       else
         echo "Pushing image to $GCR_REGISTRY";
-        gcloud builds submit --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG};
+        gcloud builds submit . --config=Dockerfile
       fi
   allow_failure: false
 
