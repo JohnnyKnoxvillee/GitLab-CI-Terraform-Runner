@@ -2,15 +2,37 @@ variables:
   IMAGE_NAME: terraform-runner
   GCR_REGISTRY: gcr.io/devops-workshop-2023
 
+before_script:
+  - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
+  - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
+  - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
+
 stages:
+  - check_version
   - build
+  - tag_image
+
+build_branch_templates:
+  stage: check_version
+  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  script:
+    - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
+    - cat all_versions.txt | grep "$(cat version.txt)" > version_image.txt
+    - IMAGE_TAG="$(cat version.txt)"
+    - VERSION_IMAGE="$(cat version_image.txt)"
+    - ALL_VERSIONS="$(cat all_versions.txt)"
 
 job1:
   stage: build
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  rules:
+    - if: $VERSION_IMAGE == $IMAGE_TAG
   script:
-  - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
-  - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
-  - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io 
-  - gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:1.0.2
-     
+    - >
+      if [ "$VERSION_IMAGE" = "$IMAGE_TAG" ]; then
+        echo "Please update version.txt, image with this tag already exists in $GCR_REGISTRY";
+      else
+        gcloud builds submit --project=devops-workshop-2023 --tag=${GCR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+      fi;
+
+
