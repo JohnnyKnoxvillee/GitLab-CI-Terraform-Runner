@@ -1,6 +1,6 @@
 variables:
   GCR_REGISTRY: gcr.io/devops-workshop-2023
-  IMAGE_NAME: staging
+  IMAGE_NAME: terraform-runner
 
 check_image_existence:
   extends: .check_image_existence
