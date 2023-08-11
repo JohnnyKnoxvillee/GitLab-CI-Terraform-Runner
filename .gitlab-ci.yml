@@ -1,6 +1,3 @@
-variables:
-  GCR_REGISTRY: gcr.io/devops-workshop-2023/terraform-runner
-
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
@@ -17,8 +14,6 @@ stages:
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
     - VERSION_IMAGE="$(cat version_image.txt)"
-    - IMAGE_TAG="$(cat version.txt)"
-    - export IMAGE_TAG="$(cat version.txt)"
 
 job1:
   extends: .build_branch_templates
@@ -28,7 +23,7 @@ job1:
         echo "Please update version.txt, image with this tag already exists in gcr.io"; 
       else
         IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG
+        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
 
 tag_image:
