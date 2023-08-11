@@ -9,4 +9,4 @@ build_and_tag_image:
   extends: .build_and_tag_image
 
 build_and_tag_image_master:
-  extends: build_and_tag_image_master
+  extends: .build_and_tag_image_master
