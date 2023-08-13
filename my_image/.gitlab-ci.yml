@@ -8,5 +8,3 @@ check_image_existence:
 
 build_and_tag_image_master:
   extends: .build_and_tag_image_master
-  rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
