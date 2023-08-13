@@ -24,7 +24,7 @@ stages:
       else
         echo "Please update version.txt, image with this tag already exists in gcr.io";
       fi;
-    - exit 1;
+      exit 1;
   allow_failure:
     exit_codes: 137
 
