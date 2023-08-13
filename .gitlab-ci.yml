@@ -29,7 +29,7 @@ stages:
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
   allow_failure: false
-    exit_codes: 1
+    exit_code: 1
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
