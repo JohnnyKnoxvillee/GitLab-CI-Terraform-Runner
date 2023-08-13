@@ -18,15 +18,18 @@ stages:
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
-      if [ ! -s "version_image.txt" ]; then
-        IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
-      else
+      if [ -s "version_image.txt" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
       fi;
       exit 1;
   allow_failure:
     exit_codes: 137
+  after_script:
+    - >
+      if [ ! -s "version_image.txt" ]; then
+      IMAGE_TAG="$(cat version.txt)"
+      gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
+      fi;
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
