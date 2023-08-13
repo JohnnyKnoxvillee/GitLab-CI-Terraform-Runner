@@ -5,13 +5,14 @@ before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
-  - cd $IMAGE_NAME
-  - crane ls $GCR_REGISTRY/$IMAGE_DIR > all_versions.txt
+  - cd $BUILD_DIR
+  - crane ls $GCR_REGISTRY/staging > all_versions.txt
   - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true
 
 stages:
   - check_image_existence
   - build_and_tag_image
+  - check_image_existence_master
   - build_and_tag_image_master
 
 .check_image_existence:
@@ -32,24 +33,28 @@ stages:
     - >
       if [ ! -s "version_image.txt" ]; then
         IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
+        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHORT_SHA
       fi;
+  allow_failure: false
+
+.check_image_existence_master:
+  stage: check_image_existence_master
+  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  script:
+    - >
+      if [ -s "version_image.txt" ]; then
+        echo "Please update version.txt, image with this tag already exists in gcr.io";
+      fi;
+      exit 1;
+  allow_failure: true
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
+  image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
-      if [ -n "$VERSION_IMAGE" ]; then
-        echo "Please update version.txt, image with this tag already exists in gcr.io"; 
-      else
-        cd $IMAGE_NAME
+      if [ ! -s "version_image.txt" ]; then
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023:$IMAGE_TAG
       fi;
-  only:
-    - master
-
-
-
-
-
+  allow_failure: false
