@@ -25,7 +25,7 @@ stages:
     - >
       if [ ! -s "$IMAGE_NAME/version_image.txt" ]; then
         IMAGE_TAG="$(cat $IMAGE_NAME/version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
+        gcloud builds submit /builds/devops-workshop-2023/docker/terraform-runner --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
 
 .build_and_tag_image_master:
