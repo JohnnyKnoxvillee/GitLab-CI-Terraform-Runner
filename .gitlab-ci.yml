@@ -19,7 +19,7 @@ stages:
     - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true
     - cat version_image.txt
     - pwd
-    - ll
+    - ls
   after_script:
     - >
       cd $IMAGE_NAME
