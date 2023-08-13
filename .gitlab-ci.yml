@@ -21,10 +21,9 @@ stages:
     - >
       if [ -s "version_image.txt" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
-        exit 1;
       fi;
-  allow_failure:
-    exit_codes: 137
+      exit 1;
+  allow_failure: true
 
 .build_and_tag_image:
   stage: build_and_tag_image
@@ -35,7 +34,6 @@ stages:
         IMAGE_TAG="$(cat $IMAGE_NAME/version.txt)"
         gcloud builds submit /builds/devops-workshop-2023/docker/terraform-runner --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
-  when: on_failure
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
