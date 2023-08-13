@@ -23,7 +23,8 @@ stages:
         echo "Please update version.txt, image with this tag already exists in gcr.io";
       fi;
       exit 1;
-  allow_failure: true
+  allow_failure:
+    exit_codes: 137
 
 .build_and_tag_image:
   stage: build_and_tag_image
