@@ -14,19 +14,22 @@ stages:
 .check_image_existence:
   stage: check_image_existence
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  before_script:
+    - cd $IMAGE_NAME
+    - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
+    - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
+    - VERSION_IMAGE="$(cat version_image.txt)"
   script:
     - >
-      cd $IMAGE_NAME;
-      crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt;
-      cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true; 
-      VERSION_IMAGE="$(cat version_image.txt)";
-
       if [ -n "$VERSION_IMAGE" ]; then;
-        echo "Please update version.txt, image with this tag already exists in gcr.io"; 
+        echo "Please update version.txt, image with this tag already exists in gcr.io";
+        exit 1 
       else
         IMAGE_TAG="$(cat version.txt)";
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
+  allow_failure: false
+    exit_codes: 1
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
