@@ -1,10 +1,17 @@
 variables:
   GCR_REGISTRY: gcr.io/devops-workshop-2023
-  BUILD_DIR: terraform-runner 
-  IMAGE_NAME: my_image  
+  BUILD_DIR: my_image 
+  IMAGE_NAME: docker-image  
 
 check_image_existence:
   extends: .check_image_existence
 
 build_and_tag_image_master:
   extends: .build_and_tag_image_master
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      when: manual
+      changes:
+        - "/builds/devops-workshop-2023/docker/my_image/Dockerfile"
+      allow_failure: false
+
