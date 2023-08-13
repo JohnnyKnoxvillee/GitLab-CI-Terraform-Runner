@@ -20,15 +20,14 @@ stages:
   after_script:
     - >
       cd $IMAGE_NAME;
-      if [ -s "version_image.txt" ]; then
-        echo "Please update version.txt, image with this tag already exists in gcr.io"; exit 1;
-      else
+      if [! -s "version_image.txt" ]; then
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
+      else
+        echo "Please update version.txt, image with this tag already exists in gcr.io"; exit 1;
       fi;
-  when: on_success
   allow_failure: true
-  
+
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
   script:
