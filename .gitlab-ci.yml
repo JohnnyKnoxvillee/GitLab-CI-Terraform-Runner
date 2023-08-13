@@ -20,7 +20,7 @@ stages:
     - VERSION_IMAGE="$(cat version_image.txt)"  
   after_script:
     - >
-      echo "$VERSION_IMAGE"
+      echo "$VERSION_IMAGE";
       if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
