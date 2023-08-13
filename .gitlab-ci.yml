@@ -26,6 +26,7 @@ stages:
     exit_codes: 137
   after_script:
     - >
+      cd $IMAGE_NAME
       if [ ! -s "version_image.txt" ]; then
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
