@@ -19,6 +19,7 @@ stages:
     - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true   
   after_script:
     - >
+      cd $IMAGE_NAME
       VERSION_IMAGE="$(cat version_image.txt)"
       echo "$VERSION_IMAGE";
       if [ -n "$VERSION_IMAGE" ]; then
