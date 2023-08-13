@@ -1,6 +1,7 @@
 variables:
   GCR_REGISTRY: gcr.io/devops-workshop-2023
   BUILD_DIR: terraform-runner 
+  IMAGE_NAME: my_image  
 
 check_image_existence:
   extends: .check_image_existence
