@@ -29,8 +29,8 @@ stages:
       fi;
   allow_failure:
     exit_codes:
-      - 1
-      - 0  
+      - 137
+      - 255
  
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
