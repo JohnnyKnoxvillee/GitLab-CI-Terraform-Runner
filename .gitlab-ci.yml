@@ -29,7 +29,6 @@ stages:
       else
         echo "Please update version.txt, image with this tag already exists in gcr.io"; exit 1;
       fi;
-  when: always
   allow_failure: false
 
 .build_and_tag_image_master:
