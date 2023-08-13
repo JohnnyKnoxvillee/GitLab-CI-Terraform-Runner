@@ -18,7 +18,6 @@ stages:
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
-      cd $IMAGE_NAME;
       if [ ! -s "version_image.txt" ]; then
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
