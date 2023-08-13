@@ -22,9 +22,7 @@ stages:
     - ls
   after_script:
     - >
-      cd $IMAGE_NAME
-      VERSION_IMAGE="$(cat version_image.txt)"
-      if [ -n "$VERSION_IMAGE" ]; then
+      if [ -s "version_image.txt" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
       else
