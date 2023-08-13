@@ -6,14 +6,6 @@ variables:
 check_image_existence:
   extends: .check_image_existence
 
-build_and_tag_image:
-  extends: .build_and_tag_image
-
-check_image_existence_master:
-  extends: .check_image_existence_master
-  rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-
 build_and_tag_image_master:
   extends: .build_and_tag_image_master
   rules:

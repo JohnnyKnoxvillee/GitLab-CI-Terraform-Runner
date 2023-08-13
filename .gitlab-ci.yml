@@ -1,5 +1,5 @@
 include:
-  - local: 'terraform-runner/.gitlab-ci.yml'
+  - local: 'my_image/.gitlab-ci.yml'
 
 before_script:
   - cd $IMAGE_NAME
