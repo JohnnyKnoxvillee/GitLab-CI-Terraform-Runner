@@ -18,6 +18,9 @@ stages:
     - crane ls $GCR_REGISTRY/$IMAGE_DIR > all_versions.txt
     - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true 
     - VERSION_IMAGE="$(cat version_image.txt)"  
+    - cat all_versions.txt
+    - cat version.txt
+    - cat version_image.txt
   after_script:
     - >
       if [ -n "$VERSION_IMAGE" ]; then
