@@ -14,6 +14,7 @@ stages:
   stage: check_image_existence
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
+    - cd $IMAGE_NAME
     - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
     - cat all_versions.txt
     - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
