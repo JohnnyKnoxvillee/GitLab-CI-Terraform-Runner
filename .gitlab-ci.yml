@@ -24,12 +24,10 @@ stages:
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       else
-        echo "Please update version.txt, image with this tag already exists in gcr.io"; 
-        exit 1;
+        echo "Please update version.txt, image with this tag already exists in gcr.io"; exit 1;
       fi;
-      exit $?
-
-  allow_failure: true
+  allow_failure:
+    exit_codes: 1
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
@@ -44,13 +42,6 @@ stages:
       fi;
   only:
     - master
-
-
-
-
-
-
-
 
 
 
