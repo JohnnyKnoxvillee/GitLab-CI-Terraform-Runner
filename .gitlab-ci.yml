@@ -27,6 +27,8 @@ stages:
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging:$IMAGE_TAG-$CI_COMMIT_SHA
       fi;
+  allow_failure:
+    exit_codes: 137
   
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
