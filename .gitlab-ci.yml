@@ -21,6 +21,7 @@ stages:
       if [ -s "version_image.txt" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
       fi;
+      exit 1;
   after_script:
     - >
       if [ ! -s "$IMAGE_NAME/version_image.txt" ]; then
