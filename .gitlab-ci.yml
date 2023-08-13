@@ -17,6 +17,8 @@ stages:
     - cd $IMAGE_NAME
     - crane ls $GCR_REGISTRY/$IMAGE_DIR > all_versions.txt
     - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true
+    - cat version_image.txt
+    - pwd
   after_script:
     - >
       cd $IMAGE_NAME
