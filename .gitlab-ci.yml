@@ -2,7 +2,7 @@ include:
   - local: 'my_image/.gitlab-ci.yml'
 
 before_script:
-  - cd $IMAGE_NAME
+  - cd $BUILD_DIR
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
