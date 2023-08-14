@@ -1,5 +1,5 @@
 
-![Picture](https://miro.medium.com/v2/resize:fit:828/format:webp/1*eoVLBnjq42U71wFvFXOBCw.png)
+![Picture](https://res.cloudinary.com/qunux/image/upload/v1594405830/configure-gitlab-ci-with-gcr_opt_ek4srf.png)
 
 # This is a tag checker and image pusher
 -----
