@@ -10,6 +10,7 @@ before_script:
   - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true
   - pwd
   - ls
+  - cat version_image.txt
 
 stages:
   - check_image_existence
