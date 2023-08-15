@@ -1,5 +1,4 @@
 variables:
-  GCR_REGISTRY: gcr.io/devops-workshop-2023
   BUILD_DIR: my_image 
   IMAGE_NAME: docker-image  
 
