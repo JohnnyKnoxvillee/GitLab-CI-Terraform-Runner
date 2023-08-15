@@ -12,7 +12,7 @@ Each folder contains the following file set:
 * **Dockerfile**
 * **version.txt**
 
-Each **.gitlab-ci.yml** file helps us to run through tags of our existing images in **GCR** with the help of [crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane)
+Each **.gitlab-ci.yml** file helps us to check tags of our existing images in **GCR** with the help of [crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane)
 and push a new image of it does not exist. If it does the files can help to return the error`exit code 1`, and end the work.
 Each image version is located in the file
 **version.txt**. The version is assigned in turn.
