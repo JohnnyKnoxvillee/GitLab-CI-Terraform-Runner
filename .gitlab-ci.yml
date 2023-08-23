@@ -5,6 +5,8 @@ before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
+  - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
+  - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
 
 stages:
   - check_image_existence
@@ -16,7 +18,8 @@ stages:
   script:
     - >
       cd $BUILD_DIR;
-      if [[ $(crane ls $GCR_REGISTRY/$IMAGE_NAME | grep -q $(cat version.txt)) == "" ]]; then
+      VERSION_IMAGE="$(cat version_image.txt)"
+      if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
       else
