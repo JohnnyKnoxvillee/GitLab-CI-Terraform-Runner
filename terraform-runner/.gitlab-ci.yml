@@ -10,6 +10,4 @@ build_and_tag_image_master:
   extends: .build_and_tag_image_master
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-      changes:
-        - "/builds/devops-workshop-2023/docker/$BUILD_DIR/Dockerfile"
 

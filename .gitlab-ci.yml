@@ -33,4 +33,4 @@ stages:
   script:
     - cd $BUILD_DIR
     - IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+    - gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
