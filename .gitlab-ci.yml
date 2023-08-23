@@ -2,10 +2,10 @@ include:
   - local: 'terraform-runner/.gitlab-ci.yml'
 
 before_script:
-  - cd $BUILD_DIR
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
+  - cd $BUILD_DIR
   - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
   - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
   - VERSION_IMAGE="$(cat version_image.txt)"
@@ -19,11 +19,11 @@ stages:
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
+      pwd
       if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
       else
-        cd $BUILD_DIR
         IMAGE_TAG="$(cat version.txt)"
         gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/staging/$IMAGE_NAME:$IMAGE_TAG-$CI_COMMIT_SHORT_SHA
       fi
