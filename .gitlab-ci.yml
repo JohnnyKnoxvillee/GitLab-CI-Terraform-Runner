@@ -1,16 +1,10 @@
 include:
-  - local: 'my_image/.gitlab-ci.yml'
+  - local: 'terraform-runner/.gitlab-ci.yml'
 
 before_script:
-  - cd $BUILD_DIR
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
-  - crane ls $GCR_REGISTRY/staging/$IMAGE_NAME > all_versions.txt
-  - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true
-  - pwd
-  - ls
-  - cat version_image.txt
 
 stages:
   - check_image_existence
@@ -21,28 +15,21 @@ stages:
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
-      if [ ! -s "version_image.txt" ]; then
-        IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/staging/$IMAGE_NAME:$IMAGE_TAG-$CI_COMMIT_SHORT_SHA
-      else
+      if [[ $(crane ls $GCR_REGISTRY/$IMAGE_NAME | grep -Fxq $(cat version.txt)) == "" ]]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
-        exit 1;
-      fi;
-  when: manual
+        exit 1
+      else
+        IMAGE_TAG="$(cat version.txt)"
+        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/staging/$IMAGE_NAME:$IMAGE_TAG-$CI_COMMIT_SHORT_SHA
+      fi
   allow_failure: false
 
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
   script:
-    - >
-      cd $BUILD_DIR
-      if [ ! -s "version_image.txt" ]; then
-        IMAGE_TAG="$(cat version.txt)"
-        gcloud builds submit --project=devops-workshop-2023 --tag=gcr.io/devops-workshop-2023/$IMAGE_NAME:$IMAGE_TAG
-      else
-        echo "Please update version.txt, image with this tag already exists in gcr.io";
-        exit 1;
-      fi;
+    - cd $BUILD_DIR
+    - IMAGE_TAG="$(cat version.txt)"
+        gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
   allow_failure: false
 
 
