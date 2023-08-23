@@ -16,7 +16,7 @@ stages:
   script:
     - >
       cd $BUILD_DIR;
-      if [[ $(crane ls $GCR_REGISTRY/$IMAGE_NAME | grep -Fxq $(cat version.txt)) == "" ]]; then
+      if [[ $(crane ls $GCR_REGISTRY/$IMAGE_NAME | grep -q $(cat version.txt)) == "" ]]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
       else
