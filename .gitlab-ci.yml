@@ -10,6 +10,7 @@ before_script:
   - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true 
   - VERSION_IMAGE="$(cat version_image.txt)"
 
+
 stages:
   - check_image_existence
   - build_and_tag_image_master
