@@ -1,6 +1,7 @@
 stages:
   - 1.0.1
 
+
 docker-tag-1.0.1:
   stage: 1.0.1
   only:
