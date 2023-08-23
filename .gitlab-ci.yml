@@ -19,7 +19,6 @@ stages:
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
-      cd $BUILD_DIR;
       if [ -n "$VERSION_IMAGE" ]; then
         echo "Please update version.txt, image with this tag already exists in gcr.io";
         exit 1
