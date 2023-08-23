@@ -7,7 +7,7 @@ before_script:
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
   - cd $BUILD_DIR
   - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
-  - cat all_versions.txt | grep -Fxq "$(cat version.txt)" > version_image.txt || true 
+  - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true 
   - VERSION_IMAGE="$(cat version_image.txt)"
   - cat version_image.txt
   - cat all_versions.txt
