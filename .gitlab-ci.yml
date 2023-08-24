@@ -32,6 +32,5 @@ stages:
 .build_and_tag_image_master:
   stage: build_and_tag_image_master
   script:
-    - cd $BUILD_DIR
     - IMAGE_TAG="$(cat version.txt)"
     - gcloud builds submit --project=devops-workshop-2023 --tag=$GCR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
