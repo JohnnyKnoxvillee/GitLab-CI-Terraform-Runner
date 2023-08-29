@@ -3,8 +3,8 @@ variables:
   IMAGE_NAME: terraform-runner  
   GCR_REGISTRY: gcr.io/devops-workshop-2023
 
-check_image_existence:
-  extends: .check_image_existence
+build-branch:
+  extends: .build-branch
 
 build_and_tag_image_master:
   extends: .build_and_tag_image_master

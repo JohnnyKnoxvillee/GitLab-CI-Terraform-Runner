@@ -7,11 +7,11 @@ before_script:
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
 
 stages:
-  - check_image_existence
+  - build-branch
   - build_and_tag_image_master
 
-.check_image_existence:
-  stage: check_image_existence
+.build-branch:
+  stage: build-branch
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
   script:
     - >
