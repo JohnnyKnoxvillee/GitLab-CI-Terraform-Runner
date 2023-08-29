@@ -20,9 +20,9 @@ Each image version is located in the file
 ### Adding an Image to Google Container Registry
 ---
 * **Create your branch**
-* **Add folder for the new image with dockerfile, version.txt etc.**
-* **Add .gitlab-ci.yaml to the folder (see example)**
-* **Include new directory ci to root gitlab-ci.yaml**
-* **Push your changes and create MR**
-* **Check build-branch job status (Staging artifact will be accessible at this time)**
-* **Merge to master and build artifact**
+* Add folder for the new image with dockerfile, version.txt etc.
+* Add .gitlab-ci.yaml to the folder (see example)
+* Include new directory ci to root gitlab-ci.yaml
+* Push your changes and create MR
+* Check build-branch job status (Staging artifact will be accessible at this time)
+* Merge to master and build artifact
