@@ -5,11 +5,6 @@ before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
   - gcloud auth print-access-token | crane auth login -u oauth2accesstoken --password-stdin gcr.io
-  - cd $BUILD_DIR
-  - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
-  - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true 
-  - VERSION_IMAGE="$(cat version_image.txt)"
-
 
 stages:
   - check_image_existence
@@ -18,6 +13,11 @@ stages:
 .check_image_existence:
   stage: check_image_existence
   image: gcr.io/devops-workshop-2023/terraform-runner:0.0.0
+  before_script:
+    - cd $BUILD_DIR
+    - crane ls $GCR_REGISTRY/$IMAGE_NAME > all_versions.txt
+    - cat all_versions.txt | grep -o "$(cat version.txt)" > version_image.txt || true 
+    - VERSION_IMAGE="$(cat version_image.txt)"
   script:
     - >
       if [ -n "$VERSION_IMAGE" ]; then
