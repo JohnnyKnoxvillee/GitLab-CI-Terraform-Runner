@@ -1,6 +1,10 @@
 include:
   - local: 'terraform-runner/.gitlab-ci.yml'
 
+default:
+  tags:
+    - my-gitlab-runner
+
 before_script:
   - echo "$SERVICE_ACCOUNT_JSON" | base64 -d > service-account.json
   - gcloud auth activate-service-account "$SERVICE_ACCOUNT_NAME" --key-file=service-account.json
